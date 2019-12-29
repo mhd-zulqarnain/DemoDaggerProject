@@ -1,14 +1,13 @@
 package com.zulqarnain.testproject.ui
 
 import android.os.Bundle
-import android.util.Log
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.zulqarnain.testproject.R
 import com.zulqarnain.testproject.api.MyService
-import com.zulqarnain.testproject.data.StoreCategoryResponse
 import com.zulqarnain.testproject.di.BaseActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
@@ -19,26 +18,32 @@ class MainActivity : BaseActivity() {
     override fun layoutRes(): Int {
         return R.layout.activity_main
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        getStoreCategories()
+
+        supportFragmentManager.
+            beginTransaction()
+            .add(R.id.fragment_container,DummyFragment()).commit()
+//        val adapter = ViewPagerAdapter(supportFragmentManager)
+//        vpCategory.adapter = adapter
+//        tbOptions.setupWithViewPager(vpCategory)
+//        adapter.notifyDataSetChanged()
+
     }
-    private fun getStoreCategories() {
 
-        retrofitService.getCategory("goshoppi777", "22")
-            .enqueue(object : Callback<StoreCategoryResponse> {
-                override fun onFailure(call: Call<StoreCategoryResponse>, t: Throwable) {
-                                Log.e("error","response is null, ErrorBody:${t}")
-                }
-                override fun onResponse(
-                    call: Call<StoreCategoryResponse>,
-                    response: Response<StoreCategoryResponse>
-                ) {
-                                Log.e("onResponse","response ")
-                }
-            })
 
+    class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager) {
+
+        override fun getItem(position: Int): Fragment {
+            return DummyFragment()
+        }
+
+        override fun getCount(): Int {
+
+            return 1
+        }
     }
 
 }
