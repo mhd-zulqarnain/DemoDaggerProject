@@ -1,6 +1,6 @@
 package com.zulqarnain.testproject.api
 
-import com.zulqarnain.testproject.data.StoreCategoryResponse
+import com.zulqarnain.testproject.data.remote.StoreCategoryResponse
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

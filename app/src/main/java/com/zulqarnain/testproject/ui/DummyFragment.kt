@@ -9,8 +9,7 @@ import android.view.ViewGroup
 
 import com.zulqarnain.testproject.R
 import com.zulqarnain.testproject.api.MyService
-import com.zulqarnain.testproject.data.StoreCategoryResponse
-import com.zulqarnain.testproject.di.BaseFragment
+import com.zulqarnain.testproject.data.remote.StoreCategoryResponse
 import dagger.android.support.DaggerFragment
 import retrofit2.Call
 import retrofit2.Callback
