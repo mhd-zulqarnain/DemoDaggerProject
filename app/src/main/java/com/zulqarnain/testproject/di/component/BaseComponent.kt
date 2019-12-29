@@ -2,10 +2,7 @@ package com.zulqarnain.testproject.di.component
 
 import android.app.Application
 import com.zulqarnain.testproject.di.BaseApplication
-import com.zulqarnain.testproject.di.module.ActivityBindingModule
-import com.zulqarnain.testproject.di.module.AppModule
-import com.zulqarnain.testproject.di.module.RoomModule
-import com.zulqarnain.testproject.di.module.ViewModelFactoryModule
+import com.zulqarnain.testproject.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -21,7 +18,8 @@ import javax.inject.Singleton
         ViewModelFactoryModule::class,
         AppModule::class,
         ActivityBindingModule::class,
-        RoomModule::class
+        RoomModule::class,
+        RepositoryModule::class
     ]
 )
 interface BaseComponent : AndroidInjector<DaggerApplication> {

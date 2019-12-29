@@ -47,15 +47,15 @@ class MainActivity : BaseActivity() {
         })
 
 
-        val todo = Todo()
-        todo.decription="test 1"
-        todoDao.insertTodo(todo = todo)
+//        val todo = Todo()
+//        todo.decription="test 1"
+//        todoDao.insertTodo(todo = todo)
 
         vm = ViewModelProviders.of(this@MainActivity, viewModelFactory)
             .get(MainViewModel::class.java)
 
-        vm.logLiveLog.observe(this, Observer {
-            Log.d("MainActivity", "log from response $it")
+        vm._insertResponse.observe(this, Observer {
+            Log.d("MainActivity", "log from response inserted $it")
         })
 
         supportFragmentManager.beginTransaction()
