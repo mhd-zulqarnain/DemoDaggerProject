@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.zulqarnain.testproject.api.MyService
+import com.zulqarnain.testproject.architecture.db.todoDao
+import com.zulqarnain.testproject.data.local.Todo
 import com.zulqarnain.testproject.data.remote.StoreCategoryResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,9 +19,15 @@ class MainViewModel @Inject constructor(
 
     var _logResponse = MutableLiveData("")
     val logLiveLog: LiveData<String> = _logResponse
+//    val todoLiveData: LiveData<Todo> = _logResponse
 
     init {
-        getStoreCategories()
+//        getStoreCategories()
+        dbCall()
+    }
+
+    fun dbCall(){
+//        todoDao.getToDoList()
     }
     fun getStoreCategories() {
 

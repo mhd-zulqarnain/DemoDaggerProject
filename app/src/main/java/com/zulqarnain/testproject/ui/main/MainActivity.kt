@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.zulqarnain.testproject.R
 import com.zulqarnain.testproject.api.MyService
 import com.zulqarnain.testproject.architecture.ViewModelFactory
+import com.zulqarnain.testproject.architecture.db.todoDao
+import com.zulqarnain.testproject.data.local.Todo
 import com.zulqarnain.testproject.di.BaseActivity
 import com.zulqarnain.testproject.ui.DummyFragment
 import javax.inject.Inject
@@ -23,6 +25,10 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
+    @Inject
+    lateinit var todoDao: todoDao
+
+
     override fun layoutRes(): Int {
         return R.layout.activity_main
     }
@@ -30,21 +36,38 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initview()
 
-        vm = ViewModelProviders.of(this@MainActivity,viewModelFactory).get(MainViewModel::class.java)
+    }
+
+    private fun initview() {
+
+        todoDao.getToDoList().observe(this@MainActivity, Observer {
+            Log.d("MainActivity", "log from response $it")
+        })
+
+
+        val todo = Todo()
+        todo.decription="test 1"
+        todoDao.insertTodo(todo = todo)
+
+        vm = ViewModelProviders.of(this@MainActivity, viewModelFactory)
+            .get(MainViewModel::class.java)
 
         vm.logLiveLog.observe(this, Observer {
-
-            Log.d("MainActivity","log from response $it")
+            Log.d("MainActivity", "log from response $it")
         })
+
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container, DummyFragment())
             .commit()
-//        val adapter = ViewPagerAdapter(supportFragmentManager)
+    }
+
+    fun initPagerAdapter() {
+        //        val adapter = ViewPagerAdapter(supportFragmentManager)
 //        vpCategory.adapter = adapter
 //        tbOptions.setupWithViewPager(vpCategory)
 //        adapter.notifyDataSetChanged()
-
     }
 
     class ViewPagerAdapter(manager: FragmentManager) :
