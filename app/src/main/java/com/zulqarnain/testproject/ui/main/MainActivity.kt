@@ -15,6 +15,7 @@ import com.zulqarnain.testproject.architecture.db.todoDao
 import com.zulqarnain.testproject.data.local.Todo
 import com.zulqarnain.testproject.di.BaseActivity
 import com.zulqarnain.testproject.ui.DummyFragment
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
@@ -35,9 +36,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         initview()
-
     }
 
     private fun initview() {
@@ -47,6 +46,7 @@ class MainActivity : BaseActivity() {
         })
 
 
+        addItem()
 //        val todo = Todo()
 //        todo.decription="test 1"
 //        todoDao.insertTodo(todo = todo)
@@ -61,6 +61,14 @@ class MainActivity : BaseActivity() {
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container, DummyFragment())
             .commit()
+    }
+
+    fun addItem() {
+        btnAdd.setOnClickListener {
+            val todo = Todo()
+            todo.decription = editText.text.toString()
+            todoDao.insertTodo(todo = todo)
+        }
     }
 
     fun initPagerAdapter() {

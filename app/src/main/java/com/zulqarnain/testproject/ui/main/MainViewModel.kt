@@ -38,7 +38,7 @@ class MainViewModel @Inject constructor(
 
     fun dbCall() {
         val todo = Todo()
-        todo.decription = "test 1"
+        todo.decription = "test 2"
         vieModelScope.launch {
             todoRepository.insertTodo(todo)
             _insertResponse.value = "inserted"
