@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class TodoRepositoryImp @Inject constructor(val todoDao: todoDao) :TodoRepository {
-    override fun getToDoList(): LiveData<Todo> {
+    override fun getToDoList(): LiveData<List<Todo>> {
         return todoDao.getToDoList()
     }
 

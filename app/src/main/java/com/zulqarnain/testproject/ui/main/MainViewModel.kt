@@ -1,9 +1,7 @@
 package com.zulqarnain.testproject.ui.main
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.zulqarnain.testproject.api.MyService
 import com.zulqarnain.testproject.architecture.db.todoDao
 import com.zulqarnain.testproject.architecture.repository.TodoRepository
@@ -23,28 +21,32 @@ class MainViewModel @Inject constructor(
     var todoRepository: TodoRepository
 ) : ViewModel() {
 
-    var _logResponse = MutableLiveData("")
+    var _getlistdata = MutableLiveData("")
     var _insertResponse = MutableLiveData("")
-    val logLiveLog: LiveData<String> = _logResponse
     var job: Job = Job()
     val vieModelScope = CoroutineScope(Dispatchers.Main + job)
-    val todoLiveData: LiveData<String> = _insertResponse
 
     init {
 
 //        getStoreCategories()
-        dbCall()
     }
 
-    fun dbCall() {
+    fun insertData(des:String) {
         val todo = Todo()
-        todo.decription = "test 2"
+        todo.decription =des
         vieModelScope.launch {
             todoRepository.insertTodo(todo)
             _insertResponse.value = "inserted"
         }
     }
 
+    val todoLiveData: LiveData<List<Todo>> = Transformations.switchMap(_getlistdata) { param->
+        todoRepository.getToDoList()
+    }
+
+    fun getLatestList(){
+        _getlistdata.value="1"
+    }
     fun getStoreCategories() {
 
         retrofitService.getCategory("goshoppi777", "22")
@@ -58,7 +60,7 @@ class MainViewModel @Inject constructor(
                     response: Response<StoreCategoryResponse>
                 ) {
                     Log.e("DummyFragment", "response ")
-                    _logResponse.value = response.toString()
+//                    _logResponse.value = response.toString()
                 }
             })
 

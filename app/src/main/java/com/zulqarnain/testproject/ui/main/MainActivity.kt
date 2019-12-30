@@ -44,13 +44,7 @@ class MainActivity : BaseActivity() {
         todoDao.getToDoList().observe(this@MainActivity, Observer {
             Log.d("MainActivity", "log from response $it")
         })
-
-
         addItem()
-//        val todo = Todo()
-//        todo.decription="test 1"
-//        todoDao.insertTodo(todo = todo)
-
         vm = ViewModelProviders.of(this@MainActivity, viewModelFactory)
             .get(MainViewModel::class.java)
 
@@ -65,9 +59,7 @@ class MainActivity : BaseActivity() {
 
     fun addItem() {
         btnAdd.setOnClickListener {
-            val todo = Todo()
-            todo.decription = editText.text.toString()
-            todoDao.insertTodo(todo = todo)
+           vm.insertData(editText.text.toString())
         }
     }
 

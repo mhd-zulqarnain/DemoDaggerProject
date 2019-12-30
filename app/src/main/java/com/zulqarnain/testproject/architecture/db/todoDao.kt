@@ -10,7 +10,7 @@ import com.zulqarnain.testproject.data.local.Todo
 @Dao
 interface todoDao {
     @Query("select * from todo")
-    fun getToDoList(): LiveData<Todo>
+    fun getToDoList(): LiveData<List<Todo>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTodo(todo: Todo)

@@ -5,6 +5,6 @@ import com.zulqarnain.testproject.data.local.Todo
 
 interface TodoRepository{
     suspend fun insertTodo(todo: Todo)
-    fun getToDoList(): LiveData<Todo>
+    fun getToDoList(): LiveData<List<Todo>>
 
 }
