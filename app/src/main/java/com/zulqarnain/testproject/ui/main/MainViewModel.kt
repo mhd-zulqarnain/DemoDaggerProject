@@ -27,6 +27,9 @@ class MainViewModel @Inject constructor(
 
     var liveResponse: LiveData<StoreCategoryResponse> = _liveData
 
+    init {
+        getDatafrom()
+    }
 
     fun getDatafrom() {
         vieModelScope.launch {
@@ -35,8 +38,8 @@ class MainViewModel @Inject constructor(
                 if (apiResponse.body() != null && apiResponse.body().toString() != "[]") {
                     apiResponse.let { response ->
                         if (response.isSuccessful) {
-                            withContext(Dispatchers.Main){
-                                _liveData.value=response.body()
+                            withContext(Dispatchers.Main) {
+                                _liveData.value = response.body()
                             }
                         }
                     }

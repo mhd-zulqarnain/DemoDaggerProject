@@ -52,11 +52,16 @@ class MainActivity : BaseActivity() {
 //            Log.d("MainActivity", "log from response inserted $it")
 //        })
 
-        vm.getDatafrom()
+
 
         vm.liveResponse.observe(this, Observer {
             Log.e("MainActivity response", "log from response ger $it")
+            editText.setText(it.code.toString())
         })
+
+//        vm.isLoadin{
+//            progressbar.
+//        }
 
 //        supportFragmentManager.beginTransaction()
 //            .add(R.id.fragment_container, DummyFragment())
