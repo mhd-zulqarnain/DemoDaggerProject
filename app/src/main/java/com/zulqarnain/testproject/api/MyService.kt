@@ -13,4 +13,10 @@ interface MyService {
                     @Field("store_id") store_id:String)
             : Call<StoreCategoryResponse>
 
+    @FormUrlEncoded
+    @POST("/services/getCategory")
+        fun getCategoryGeneric(@Field("client_key") client_key:String,
+                    @Field("store_id") store_id:String)
+            : Call<Class<*>>
+
 }

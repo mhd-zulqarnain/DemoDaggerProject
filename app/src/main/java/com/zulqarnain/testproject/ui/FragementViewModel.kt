@@ -8,5 +8,4 @@ class FragementViewModel @Inject constructor(
     var todoRepository: TodoRepository
 ):ViewModel(){
 
-
 }

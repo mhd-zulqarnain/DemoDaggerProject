@@ -48,13 +48,19 @@ class MainActivity : BaseActivity() {
         vm = ViewModelProviders.of(this@MainActivity, viewModelFactory)
             .get(MainViewModel::class.java)
 
-        vm._insertResponse.observe(this, Observer {
-            Log.d("MainActivity", "log from response inserted $it")
+//        vm._insertResponse.observe(this, Observer {
+//            Log.d("MainActivity", "log from response inserted $it")
+//        })
+
+        vm.getDatafrom()
+
+        vm.liveResponse.observe(this, Observer {
+            Log.e("MainActivity response", "log from response ger $it")
         })
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, DummyFragment())
-            .commit()
+//        supportFragmentManager.beginTransaction()
+//            .add(R.id.fragment_container, DummyFragment())
+//            .commit()
     }
 
     fun addItem() {
