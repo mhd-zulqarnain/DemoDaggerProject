@@ -20,12 +20,12 @@ class MainViewModel @Inject constructor(
 
     var _getlistdata = MutableLiveData("")
     var _insertResponse = MutableLiveData("")
-    var _liveData = MutableLiveData(StoreCategoryResponse())
+    var _liveData=MutableLiveData<StoreCategoryResponse>()
 
     var job: Job = Job()
     val vieModelScope = CoroutineScope(Dispatchers.Main + job)
 
-    var liveResponse: LiveData<StoreCategoryResponse> = _liveData
+    val liveResponse: LiveData<StoreCategoryResponse> = _liveData
 
     init {
         getDatafrom()
