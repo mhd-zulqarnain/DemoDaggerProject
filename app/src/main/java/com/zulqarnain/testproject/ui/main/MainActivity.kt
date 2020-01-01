@@ -16,6 +16,7 @@ import com.zulqarnain.testproject.data.local.Todo
 import com.zulqarnain.testproject.di.BaseActivity
 import com.zulqarnain.testproject.ui.DummyFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
@@ -29,7 +30,7 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var todoDao: todoDao
 
-
+    val scope = CoroutineScope(Dispatchers.Main + Job())
     override fun layoutRes(): Int {
         return R.layout.activity_main
     }
@@ -37,6 +38,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initview()
+        getData()
     }
 
     private fun initview() {
@@ -53,7 +55,6 @@ class MainActivity : BaseActivity() {
 //        })
 
 
-
         vm.liveResponse.observe(this, Observer {
             Log.e("MainActivity response", "log from response ger $it")
             editText.setText(it.code.toString())
@@ -68,9 +69,17 @@ class MainActivity : BaseActivity() {
 //            .commit()
     }
 
+    private fun getData(){
+        scope.launch {
+            withContext(Dispatchers.IO){
+                val response = retrofitService.getReponse().execute()
+                Log.e("MainActivity response","$response")
+            }
+        }
+    }
     fun addItem() {
         btnAdd.setOnClickListener {
-           vm.insertData(editText.text.toString())
+            vm.insertData(editText.text.toString())
         }
     }
 
@@ -93,5 +102,6 @@ class MainActivity : BaseActivity() {
             return 1
         }
     }
+
 
 }
