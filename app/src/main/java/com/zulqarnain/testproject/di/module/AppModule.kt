@@ -1,6 +1,8 @@
 package com.zulqarnain.testproject.di.module
 
+import com.google.gson.GsonBuilder
 import com.zulqarnain.testproject.api.MyService
+import com.zulqarnain.testproject.data.GenericBodyTypeAdapterFactory
 import com.zulqarnain.testproject.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -10,12 +12,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+
 @Module
 class AppModule {
 
     @Singleton
     @Provides
     fun provideClient():Retrofit{
+        val gson = GsonBuilder()
+                .registerTypeAdapterFactory(GenericBodyTypeAdapterFactory.getGenericBodyTypeAdapterFactory())
+            .create()
 
         val client = OkHttpClient.Builder()
 //        .addInterceptor(interceptor)
@@ -25,7 +31,7 @@ class AppModule {
             .build()
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()
 

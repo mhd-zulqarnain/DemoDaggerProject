@@ -55,6 +55,7 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.3'
     kapt 'androidx.room:room-compiler:2.2.3'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc03"
 
     // Stetho
     implementation 'com.facebook.stetho:stetho:1.5.0'

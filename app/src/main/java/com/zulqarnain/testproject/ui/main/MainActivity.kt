@@ -6,13 +6,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
 import com.zulqarnain.testproject.R
 import com.zulqarnain.testproject.api.MyService
 import com.zulqarnain.testproject.architecture.ViewModelFactory
 import com.zulqarnain.testproject.architecture.db.todoDao
-import com.zulqarnain.testproject.data.local.Todo
+import com.zulqarnain.testproject.data.local.Country
 import com.zulqarnain.testproject.di.BaseActivity
 import com.zulqarnain.testproject.ui.DummyFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -69,14 +71,22 @@ class MainActivity : BaseActivity() {
 //            .commit()
     }
 
-    private fun getData(){
+    private fun getData() {
         scope.launch {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 val response = retrofitService.getReponse().execute()
-                Log.e("MainActivity response","$response")
+                val tmp = (response.body()!!.get("body") as JsonObject).
+                    getAsJsonArray("countries")
+                val type = object : TypeToken<ArrayList<Country>>() {}.type
+                val list: ArrayList<Country>
+                list = Gson().fromJson(Gson().toJson(tmp), type)
+                Log.e("MainActivity response", "$list")
+
+
             }
         }
     }
+
     fun addItem() {
         btnAdd.setOnClickListener {
             vm.insertData(editText.text.toString())

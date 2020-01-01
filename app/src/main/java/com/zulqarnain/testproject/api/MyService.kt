@@ -1,6 +1,8 @@
 package com.zulqarnain.testproject.api
 
+import com.google.gson.JsonObject
 import com.zulqarnain.testproject.data.remote.StoreCategoryResponse
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -21,6 +23,8 @@ interface MyService {
             : Call<Class<*>>
 
     @GET("localdata_1.json")
-    fun getReponse():Call<*>
+    fun getReponse():Call<JsonObject>
+
+
 
 }

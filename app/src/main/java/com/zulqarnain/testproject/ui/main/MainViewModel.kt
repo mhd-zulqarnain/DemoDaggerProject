@@ -22,8 +22,6 @@ class MainViewModel @Inject constructor(
     var _insertResponse = MutableLiveData("")
     var _liveData = MutableLiveData(StoreCategoryResponse())
 
-    var job: Job = Job()
-    val vieModelScope = CoroutineScope(Dispatchers.Main + job)
 
     var liveResponse: LiveData<StoreCategoryResponse> = _liveData
 
@@ -32,7 +30,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun getDatafrom() {
-        vieModelScope.launch {
+        viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val apiResponse = todoRepository.getCategory()
                 if (apiResponse.body() != null && apiResponse.body().toString() != "[]") {
@@ -56,7 +54,7 @@ class MainViewModel @Inject constructor(
     fun insertData(des: String) {
         val todo = Todo()
         todo.decription = des
-        vieModelScope.launch {
+        viewModelScope.launch {
             todoRepository.insertTodo(todo)
             _insertResponse.value = "inserted"
         }
@@ -91,9 +89,6 @@ class MainViewModel @Inject constructor(
 
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
-    }
+
 
 }
